@@ -1,0 +1,10 @@
+AWND - Average wind speed
+WT10 - Tornado, waterspout, or funnel cloud" 
+WT01 - Fog, ice fog, or freezing fog (may include heavy fog)
+WT02 - Heavy fog or heaving freezing fog (not always distinguished from fog)
+WT03 - Thunder
+TAVG - Average Temperature.
+PRCP - Precipitation
+WT05 - Hail (may include small hail)
+WT08 - Smoke or haze 
+TSUN - Total sunshine for the period
