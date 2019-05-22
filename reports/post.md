@@ -23,7 +23,7 @@ Some exploratory plots show that we have calls on 29% of days, which means the d
 
 ______plots
 
-Lastly, to get a tidy dataset, we need to create a table with every date in the range we're considering and give a boolean that reports on the presence/absence of a call on that day. A simple script to convert the raw `sar_data` into a `clean_table` accomplished this by taking advantage of the panda's date_range function.
+But first, we need a tidy dataset. Essentially, we a table with every date in the range we're considering and give a boolean that reports on the presence/absence of a call on that day. A simple script to convert the raw `sar_data` into a `clean_table` accomplished this by taking advantage of the panda's date_range function.
 
 ```python
 date_range = pd.date_range(start='1/1/2002', end='4/01/2019')
@@ -39,8 +39,53 @@ sar_clean.columns = ['date','mission']
 
 ### Features
 
-To start, we'll focus on extracting features from the dates and integrate some weather information from NOAA. Later on, we'll see if adding additional features including Google Trends and holiday information helps improve the model.
+Using the date column from the `clean_table` table, we can use the nifty fast.ai fonction that extracts information like day of week, year, month, etc. from a datetime object. After applying that to our tidy table, we have ~13 features to start with.
 
+Along with these, we'll integrate some weather information from NOAA. There are a bunch of cool [tools](https://www.ncdc.noaa.gov/cdo-web/) they provide that data scientists will find useful, and I encourage anyone interested in integrating weather data to check it out.
 
+Ideally, we'd be able to use weather forecast data for this project, rather than actual weather data. When we're planning ahead, we'll only have access to forecasts, which obviously differ from the actual weather quite often. All the resources I found that keep these data were paid services, so for I'll have to settle with the NOAA data for now.
+
+I downloaded weather data from two local weather stations - Boeing Field, which is just south of Seattle, and Mount Gardner, which is in the mountain range where most of our missions occur. We get information on temperature, wind, sun and precip, which is a good picture of the weather on a given day. A couple sanity checks make sure the data are organized in the way we expect (hot in the summer, more rain in the winter). Merging these with the `clean_table` using `pandas.merge` give us our initial data set.
 
 ## Feature Engineering
+
+### Test, Train, Initial Model
+
+Selecting an appropriate validation and test set was an important topic in the course. I'm taking a similar approach here as the Kaggle competitions for bulldozer auctions and grocery store sales predictions. In these situations, we need to use data from the past to predict the future, so we sort the data by date and hold out the most recent 15-20% of the data for the validation set. We'll do the same thing here. For the test set, I'll use a more 'real-life approach' and just test my model on this year in real-time.
+
+For model evaluation, the built-in scoring functions probably aren't ideal. There's only a mission 29% of the time, so a naive model always predicting 'no call' will be correct with 71% accuracy. ROC curves are a decent approach for this situation, so I used these for model evaluation. These weren't extensively discussed in the fast.ai course, as they focused mostly on regression problems. As a refresher, I found [this article](https://medium.com/greyatom/lets-learn-about-auc-roc-curve-4a94b4d88152) to be helpful.
+
+Built a RF, here's the ROC
+
+Feature importance makes sense -
+Tried removing a few and found some that didn't hurt performace.
+
+### Holiday Data
+
+Will adding holiday data help the model? I used `pandas.tseries.holiday` which contains a database of US holidays and tried a few different approaches, summarized below:
+- Add a column with a boolean for `is_holiday`
+- Add columns for `days_until_next_holiday` and `days_since_last_holiday`
+- Add a column for `days_away_from_nearest_holiday`
+
+The last approach was most effective, which makes sense. The days surrounding holidays are most likely to be days off of work and correspond to an increase in hikers. The ROC improves from 61% to 65% by including this information.
+
+### Google Trends
+
+Accessing this data was
+
+This is a confusing result - the ROC doesn't improve, but when you look at feature importance, it's the second most important feature. Does this just mean that the trend data is redundant with some of the date features?
+
+## Building the Final Model
+
+Okay, so now the final model. I compared three tree-based algorithms with the same basic parameters and the results are summarized below.
+
+
+XGBoost did the best, so a tool the opportunity to learn about how to tune these models. The main approach I utilized was sklearn's build in [grid search](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) functionality. This took a long time to run, but the results give me the best combination parameters the model could find.
+
+## Model Evaluation
+
+I'm going to monitor the model's performance all year, but as of writing this article, I'm having an xx% success rate predicting missions. Here's an example of how it performed last month.
+
+
+
+I'm also excited to hear suggestions from anyone with other ideas for features or ways I can improve my approach. And thanks for Jeremy, Rachel and the fast.ai team for a great experience!
