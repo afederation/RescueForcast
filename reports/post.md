@@ -1,6 +1,6 @@
 # RescueForest: Predicting Emergency Response with Random Forests
 
-I'm finishing up the material in the fast.ai '[Introduction to ML](http://course18.fast.ai/ml)' course and it has been fantastic. The learning philosophy, which the instructor Jeremy describes as a top-down approach, worked really well for my learning style. The general idea is that you learn HOW to do ML before you learn WHY it works - the same way you learn HOW to play baseball before learning WHY you might use one particular strategy at a given time.
+I'm finishing up the material in the fast.ai [Introduction to ML](http://course18.fast.ai/ml) course and it has been fantastic. The learning philosophy, which the instructor Jeremy describes as a top-down approach, worked really well for my learning style. The general idea is that you learn HOW to do ML before you learn WHY it works - the same way you learn HOW to play baseball before learning WHY you might use one particular strategy at a given time.
 
 I wanted to do a small capstone project to practice what I learned, so I decided to study emergency response prediction - particularly for an organization called [King County Search and Rescue](http://www.kingcountysar.org/) (SAR), which I volunteer as a member of. We do a variety of rescue missions, but the most common call is to help injured or lost hikers in the wilderness surrounding Seattle. It's mostly a volunteer-run organization, so resources are inherently limited. Having a method to predict the likelihood of a call on any given day might help us prioritize resources and preparation to best serve the community.
 
@@ -103,6 +103,6 @@ XGBoost did the best, so a tool the opportunity to learn about how to tune these
 
 ## Model Evaluation
 
-I'm going to monitor the model's performance all year, but as of writing this article, the model is predicting correctly 2/3 of the time. It's made a difference for me so far, letting me have gear ready ahead of time on the days it predicts a positive results.
+I'm going to monitor the model's performance all year, but as of writing this article, the model is predicting correctly 2/3 of the time. It's a hard problem, with a lot of randomness and a small amount of data. That being said, it has made a difference for my life so far, letting me have gear ready ahead of time on the days it predicts a high call probability.
 
-That being said, there's definitely still room for improvement. I'm going to continue trying new models as I learn them and adding in additional data as I find it. I'm also excited to hear suggestions from anyone with other ideas for features or ways I can improve my approach. And thanks for Jeremy, Rachel and the fast.ai team for a great experience!
+Still, there's definitely room for improvement. I'm going to continue trying new models as I learn them and adding in additional data as I find it. I'm also excited to hear suggestions from anyone with other ideas for features or ways I can improve my approach. And thanks for Jeremy, Rachel and the fast.ai team for a great experience!
