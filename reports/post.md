@@ -68,9 +68,9 @@ Next, a simple random forest built wirth scikit-learn gave some signal in the RO
 
 ![roc1](figures/roc1.png)
 
-When digging into the feature importances used in the model, things seemed to make sense. The day of week, days elapsed (just a running count of days since the beginning of the dataset) and day of year were the three most important factors. The most important weather factor was the wind in Seattle, which may be reporting on the presence of a storm? The next few weather features were temps, which isn't a surprise.
+When digging into the feature importances used in the model, things seemed to make sense. The day of week, days elapsed (just a running count of days since the beginning of the dataset) and day of year were the three most important features. The most important weather feature was the wind in Seattle, which may be reporting on the presence of a storm? The next few weather features were temps, which isn't a surprise.
 
-In the course, the approach presented essentially keeps all features that show an importance, even if they may be correlated. There's no doubt that temperatures in nearby places are correlated, but the model is supposed to deal with this with an ensemble approach. In the future, it may be worth doing some additional feature engineering to remove some redundancies. I did remove a few features that had very low importance without and didn't hurt performance after removal.
+In the course, Jeremy keeps all features that show an importance, even if they may be correlated. There's no doubt that temperatures in nearby places are correlated, but the model is supposed to deal with this with an ensemble approach. In the future, it may be worth doing some additional feature engineering to remove some redundancies. I did remove a few features that had very low importance without and didn't hurt performance after removal.
 
 ### Holiday Data
 
